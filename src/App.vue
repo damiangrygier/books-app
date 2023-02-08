@@ -3,36 +3,24 @@
   <header>
     <h1>Books<span>.app</span></h1>
   </header>
-  <ul>
-    <li
-    :key="index"
-     v-for="(book, index) in books">
-      {{ book.title }}, {{ book.price }}$
-      <button @click="removeBook(index)">Remove</button>
-    </li>
-  </ul>
-  <p v-show="!books.length">No books...</p>
-  <div>
-    <p v-if="books.length > 5">{{ books.length }}</p>
-    <p v-else-if="books.length <= 5 && books.length > 1">Not too many of them…</p>
-    <p v-else-if="books.length === 1">One single book!</p>
-    <p v-else>Go get some books!</p>
-  </div>
-  <form @submit.prevent="handleSubmit">
-    <label>
-      Title:
-      <input v-model="form.title" type="text" name="title">
-    </label>
-    <label>
-      Price:
-      <input v-model="form.price" type="number" name="price">
-    </label>
-    <button>Add book</button>
-  </form>
+  <books-list
+  @remove="removeBook"
+  :books="books" />
+  <books-length-msg
+  :books="books" />
+  <books-form
+  @add="addBook" />
+  <books-summary
+  :books="books" />
  </div>
 </template>
 
 <script>
+import BooksList from './components/BooksList'
+import BooksLengthMsg from './components/BooksLengthMsg'
+import BooksForm from './components/BooksForm.vue'
+import BooksSummary from './components/BooksSummary.vue'
+
 export default {
   name: 'App',
   data: () => ({
@@ -45,21 +33,21 @@ export default {
         title: 'Of Mice and Men',
         price: 18
       }
-    ],
-    form: {
-      title: '',
-      price: 0
-    }
+    ]
   }),
   methods: {
     removeBook (index) {
       this.books.splice(index, 1)
     },
-    handleSubmit () {
-      this.books.push({ ...this.form })
-      this.form.title = ''
-      this.form.price = 0
+    addBook (book) {
+      this.books.push({ ...book })
     }
+  },
+  components: {
+    BooksList,
+    BooksLengthMsg,
+    BooksForm,
+    BooksSummary
   }
 }
 </script>
