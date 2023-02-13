@@ -1,8 +1,8 @@
 <template>
     <div>
-        <p v-if="books.length > 5">{{ books.length }}</p>
-        <p v-else-if="books.length <= 5 && books.length > 1">Not too many of them…</p>
-        <p v-else-if="books.length === 1">One single book!</p>
+        <p v-if="booksAPI.length > 5">{{ booksAPI.length }}</p>
+        <p v-else-if="booksAPI.length <= 5 && booksAPI.length > 1">Not too many of them…</p>
+        <p v-else-if="booksAPI.length === 1">One single book!</p>
         <p v-else>Go get some books!</p>
   </div>
 </template>
@@ -11,9 +11,8 @@
 export default {
   name: 'BooksLengthMsg',
   props: {
-    books: {
-      type: Array,
-      required: true
+    booksAPI: {
+      type: Array
     }
   }
 }
